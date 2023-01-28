@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.gramzin.movies.databinding.MovieItemBinding
 import com.gramzin.movies.model.Movie
+import com.squareup.picasso.Picasso
 import java.lang.Integer.min
 
 class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
@@ -19,6 +20,7 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
             filmDesc1.text = "${movie.alternativeName}, ${movie.year}, ${movie.movieLength} мин."
             val shortList = movie.countries.subList(0, min(2, movie.countries.size)).joinToString()
             filmDesc2.text = "$shortList • ${movie.type}"
+            Picasso.get().load(movie.posterPreviewURL).into(filmPoster)
         }
     }
 
