@@ -17,9 +17,12 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     class MovieViewHolder(private val binding: MovieItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie) = with(binding){
             filmName.text = movie.name
+            if (movie.alternativeName == "null")
+                movie.alternativeName = movie.name
             filmDesc1.text = "${movie.alternativeName}, ${movie.year}, ${movie.movieLength} мин."
+            filmRating.text = movie.rating
             val shortList = movie.countries.subList(0, min(2, movie.countries.size)).joinToString()
-            filmDesc2.text = "$shortList • ${movie.type}"
+            filmDesc2.text = "$shortList • ${movie.genres.joinToString()}"
             Picasso.get().load(movie.posterPreviewURL).into(filmPoster)
         }
     }
@@ -35,4 +38,8 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     override fun getItemCount() = movieList.size
 
+    fun addMovies(movies: Collection<Movie>){
+        movieList.addAll(movies)
+        notifyDataSetChanged()
+    }
 }
